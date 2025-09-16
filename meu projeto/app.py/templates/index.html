@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Formulário de Cadastro</h1>
+        <form method="POST" action="/cadastro">
+            <input type="text" name="nome" placeholder="Nome" required>
+            <input type="text" name="sobrenome" placeholder="Sobrenome" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="number" name="idade" placeholder="Idade" required>
+            <input type="number" step="0.01" name="imc" placeholder="IMC" required>
+            <select name="treina" required>
+                <option value="">Já treina?</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+            <input type="text" name="tempo_treino" placeholder="Há quanto tempo treina?">
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+</body>
+</html>
