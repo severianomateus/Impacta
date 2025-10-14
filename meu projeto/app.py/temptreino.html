@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Quantas vezes por semana?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Quantas vezes por semana você deseja treinar?</h1>
+
+        <form method="POST" action="{{ url_for('gerar_treino') }}">
+            <select name="dias" required>
+                <option value="2">2 dias por semana</option>
+                <option value="3" selected>3 dias por semana</option>
+                <option value="4">4 dias por semana</option>
+                <option value="5">5 dias por semana</option>
+                <option value="6">6 dias por semana</option>
+            </select>
+
+            <button type="submit">Gerar meu cronograma</button>
+        </form>
+
+        <p style="margin-top:12px;">
+            <a href="{{ url_for('sucesso') }}" class="btn-voltar">Voltar</a>
+        </p>
+    </div>
+</body>
+</html>
