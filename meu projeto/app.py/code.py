@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, url_for
 import pyodbc
 
 app = Flask(__name__)
-
+app.secret_key = "troque_essa_chave_para_uma_secreta_e_segura"  # altere em produção
 
 db_config = {
     "server": r"MOBILITY_028115\SQLEXPRESS03",
@@ -49,32 +49,129 @@ def init_db():
     conn.commit()
     conn.close()
 
+ 
 init_db()
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
+
 @app.route("/cadastro", methods=["POST"])
 def cadastro():
-    nome = request.form["nome"]
-    sobrenome = request.form["sobrenome"]
-    email = request.form["email"]
-    idade = request.form["idade"]
-    imc = request.form["imc"]
-    treina = request.form["treina"]
-    tempo_treino = request.form["tempo_treino"]
+       
+    nome = request.form.get("nome", "").strip()
+    sobrenome = request.form.get("sobrenome", "").strip()
+    email = request.form.get("email", "").strip()
+    idade = request.form.get("idade") or None
+    imc = request.form.get("imc") or None
+    treina = request.form.get("treina", "")
+    tempo_treino = request.form.get("tempo_treino", "")
 
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO usuarios (nome, sobrenome, email, idade, imc, treina, tempo_treino)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (nome, sobrenome, email, idade, imc, treina, tempo_treino))
-    conn.commit()
-    conn.close()
+    try:
+        idade_val = int(idade) if idade not in (None, "") else None
+    except:
+        idade_val = None
+    try:
+        imc_val = float(imc) if imc not in (None, "") else None
+    except:
+        imc_val = None
 
-    return redirect("/")
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO usuarios (nome, sobrenome, email, idade, imc, treina, tempo_treino)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (nome, sobrenome, email, idade_val, imc_val, treina, tempo_treino))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        
+        return f"Erro ao salvar no banco: {e}", 500
+
+    
+    session['user_temp'] = {
+        "nome": nome,
+        "sobrenome": sobrenome,
+        "email": email,
+        "idade": idade_val,
+        "imc": imc_val,
+        "treina": treina,
+        "tempo_treino": tempo_treino
+    }
+
+    
+    return redirect(url_for('sucesso'))
+
+
+@app.route("/sucesso")
+def sucesso():
+    
+    user = session.get('user_temp', {})
+    return render_template("success.html", user=user)
+
+
+@app.route("/treino")
+def treino():
+    
+    if 'user_temp' not in session:
+        return redirect(url_for('index'))
+    return render_template("treino.html")
+
+
+@app.route("/gerar_treino", methods=["POST"])
+def gerar_treino():
+    if 'user_temp' not in session:
+        return redirect(url_for('index'))
+
+    dias = request.form.get("dias")
+    try:
+        dias_int = int(dias)
+    except:
+        dias_int = 3  
+    cronogramas = {
+        2: [
+            ("Dia 1", "Peito e Tríceps - 4 exercícios de 3 séries"),
+            ("Dia 2", "Costas e Bíceps - 4 exercícios de 3 séries")
+        ],
+        3: [
+            ("Dia 1", "Peito - 4 exercícios de 3 séries"),
+            ("Dia 2", "Costas - 4 exercícios de 3 séries"),
+            ("Dia 3", "Pernas - 5 exercícios de 4 séries")
+        ],
+        4: [
+            ("Dia 1", "Peito - 4 exercícios de 3 séries"),
+            ("Dia 2", "Costas - 4 exercícios de 3 séries"),
+            ("Dia 3", "Pernas - 5 exercícios de 4 séries"),
+            ("Dia 4", "Ombro e Braços - 4 exercícios de 3 séries")
+        ],
+        5: [
+            ("Dia 1", "Peito - 4 exercícios de 3 séries"),
+            ("Dia 2", "Costas - 4 exercícios de 3 séries"),
+            ("Dia 3", "Pernas - 5 exercícios de 4 séries"),
+            ("Dia 4", "Ombro - 4 exercícios de 3 séries"),
+            ("Dia 5", "Core + Cardio leve - 20 minutos")
+        ],
+        6: [
+            ("Dia 1", "Peito e Tríceps"),
+            ("Dia 2", "Costas e Bíceps"),
+            ("Dia 3", "Pernas"),
+            ("Dia 4", "Ombros"),
+            ("Dia 5", "Treino funcional/HIIT"),
+            ("Dia 6", "Abdômen + Mobilidade")
+        ]
+    }
+
+    
+    plano = cronogramas.get(dias_int, cronogramas[3])
+
+    
+    user = session.get('user_temp', {})
+
+    return render_template("resultado_treino.html", user=user, dias=dias_int, plano=plano)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+
