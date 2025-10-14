@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Seu Cronograma</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Seu plano semanal ({{ dias }} dias)</h1>
+
+        <p>Olá, <strong>{{ user.nome or "usuário" }}</strong> — aqui está um plano sugerido:</p>
+
+        <table class="cronograma">
+            <thead>
+                <tr><th>Dia</th><th>Treino</th></tr>
+            </thead>
+            <tbody>
+                {% for dia, treino in plano %}
+                <tr>
+                    <td>{{ dia }}</td>
+                    <td>{{ treino }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p style="margin-top:14px;">
+            <a href="{{ url_for('index') }}" class="btn-voltar">Novo cadastro</a>
+            &nbsp;
+            <a href="{{ url_for('treino') }}" class="btn-link">Ajustar dias</a>
+        </p>
+    </div>
+</body>
+</html>
