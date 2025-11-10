@@ -42,3 +42,39 @@
     text-align: center;
     font-weight: 700;
 }
+
+/* estilo da terceira função */
+.separator {
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+    margin: 18px 0;
+    border-radius: 1px;
+}
+
+.tempo-sedentarismo {
+    padding: 16px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(0,255,224,0.12), rgba(255,0,255,0.12));
+    border: 1px solid rgba(255,255,255,0.06);
+    box-shadow: 0 6px 20px rgba(204,0,255,0.08), 0 0 18px rgba(0,255,224,0.06) inset;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.tempo-sedentarismo .tempo-title {
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 0 8px rgba(255,0,255,0.12);
+    margin-bottom: 8px;
+}
+
+.tempo-sedentarismo .tempo-text {
+    font-weight: 600;
+    color: #e9fdf8; /* suave sobre o fundo */
+    font-size: 0.98rem;
+}
+
+@media (max-width: 420px) {
+    .cronograma th, .cronograma td { font-size: 0.88rem; padding: 8px; }
+    .form-container { width: 92%; padding: 20px; }
+}
