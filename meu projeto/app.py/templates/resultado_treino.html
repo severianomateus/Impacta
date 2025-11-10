@@ -25,6 +25,15 @@
             </tbody>
         </table>
 
+        <!-- Separador visual -->
+        <div class="separator" aria-hidden="true"></div>
+
+        <!-- Caixa com a estimativa para sair do sedentarismo -->
+        <div class="tempo-sedentarismo" role="status" aria-live="polite">
+            <div class="tempo-title">Quanto tempo para sair do sedentarismo?</div>
+            <div class="tempo-text">{{ tempo_para_sair }}</div>
+        </div>
+
         <p style="margin-top:14px;">
             <a href="{{ url_for('index') }}" class="btn-voltar">Novo cadastro</a>
             &nbsp;
