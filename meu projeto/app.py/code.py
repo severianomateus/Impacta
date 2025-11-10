@@ -119,7 +119,6 @@ def treino():
         return redirect(url_for('index'))
     return render_template("treino.html")
 
-
 @app.route("/gerar_treino", methods=["POST"])
 def gerar_treino():
     if 'user_temp' not in session:
@@ -129,7 +128,9 @@ def gerar_treino():
     try:
         dias_int = int(dias)
     except:
-        dias_int = 3  
+        dias_int = 3  # default seguro
+
+    # cronogramas (sua divisão aprovada)
     cronogramas = {
         2: [
             ("Dia 1", "Peito e Tríceps - 4 exercícios de 3 séries"),
@@ -163,15 +164,28 @@ def gerar_treino():
         ]
     }
 
-    
     plano = cronogramas.get(dias_int, cronogramas[3])
-
-    
     user = session.get('user_temp', {})
 
-    return render_template("resultado_treino.html", user=user, dias=dias_int, plano=plano)
+    #--- nova funcionalidade: tempo para sair do sedentarismo ---
+    
+    if dias_int <= 3:
+        tempo_para_sair = "Estimativa: aproximadamente 2 meses para sair do sedentarismo."
+    elif dias_int >= 5:
+        tempo_para_sair = "Estimativa: aproximadamente 2 semanas para sair do sedentarismo."
+    else:  # aqui entra o caso dias_int == 4
+        tempo_para_sair = "Estimativa: aproximadamente 1 mês para sair do sedentarismo."
+
+    return render_template(
+        "resultado_treino.html",
+        user=user,
+        dias=dias_int,
+        plano=plano,
+        tempo_para_sair=tempo_para_sair
+    )
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
