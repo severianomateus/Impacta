@@ -130,7 +130,6 @@ def gerar_treino():
     except:
         dias_int = 3  # default seguro
 
-    # cronogramas (sua divisão aprovada)
     cronogramas = {
         2: [
             ("Dia 1", "Peito e Tríceps - 4 exercícios de 3 séries"),
@@ -167,7 +166,7 @@ def gerar_treino():
     plano = cronogramas.get(dias_int, cronogramas[3])
     user = session.get('user_temp', {})
 
-    #--- nova funcionalidade: tempo para sair do sedentarismo ---
+    #-- nova funcionalidade: tempo para sair do sedentarismo 
     
     if dias_int <= 3:
         tempo_para_sair = "Estimativa: aproximadamente 2 meses para sair do sedentarismo."
@@ -187,5 +186,6 @@ def gerar_treino():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
