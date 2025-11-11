@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, session, url_for
 import pyodbc
 
 app = Flask(__name__)
-app.secret_key = "troque_essa_chave_para_uma_secreta_e_segura"  # altere em produção
+app.secret_key = "troque_essa_chave_para_uma_secreta_e_segura"  
 
 db_config = {
     "server": r"MOBILITY_028115\SQLEXPRESS03",
@@ -186,6 +186,7 @@ def gerar_treino():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
