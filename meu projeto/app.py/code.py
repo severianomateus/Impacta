@@ -188,5 +188,40 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
+@app.route("/calorias")
+def calorias():
+    return render_template("calorias.html")
+
+@app.route("/calcular_calorias", methods=["POST"])
+def calcular_calorias():
+    sexo = request.form["sexo"]
+    peso = float(request.form["peso"])
+    altura = float(request.form["altura"])
+    idade = int(request.form["idade"])
+    nivel = request.form["nivel"]
+
+    if sexo == "masculino":
+        tmb = 10 * peso + 6.25 * altura - 5 * idade + 5
+    else:
+        tmb = 10 * peso + 6.25 * altura - 5 * idade - 161
+
+    fatores = {
+        "sedentario": 1.2,
+        "leve": 1.375,
+        "moderado": 1.55,
+        "intenso": 1.725
+    }
+
+    tdee = tmb * fatores[nivel]
+    perder = tdee - 300
+    ganhar = tdee + 300
+
+    return render_template(
+        "resultado_calorias.html",
+        tdee=round(tdee),
+        perder=round(perder),
+        ganhar=round(ganhar)
+    )
+
 
 
