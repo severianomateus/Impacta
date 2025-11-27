@@ -187,7 +187,7 @@ def gerar_treino():
 if __name__ == "__main__":
     app.run(debug=True)
 
-
+#Ultima funcionalidade -> calculo de calorias
 @app.route("/calorias")
 def calorias():
     return render_template("calorias.html")
@@ -222,6 +222,7 @@ def calcular_calorias():
         perder=round(perder),
         ganhar=round(ganhar)
     )
+
 
 
 
