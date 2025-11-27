@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calcular Calorias</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Calculadora de Gasto Calórico</h1>
+
+        <form method="POST" action="/calcular_calorias">
+            
+            <select name="sexo" required>
+                <option value="">Sexo</option>
+                <option value="masculino">Masculino</option>
+                <option value="feminino">Feminino</option>
+            </select>
+
+            <input type="number" name="peso" step="0.1" placeholder="Peso (kg)" required>
+            <input type="number" name="altura" step="0.1" placeholder="Altura (cm)" required>
+            <input type="number" name="idade" placeholder="Idade" required>
+
+            <select name="nivel" required>
+                <option value="">Nível de atividade</option>
+                <option value="sedentario">Sedentário</option>
+                <option value="leve">Levemente ativo</option>
+                <option value="moderado">Moderadamente ativo</option>
+                <option value="intenso">Muito ativo</option>
+            </select>
+
+            <button type="submit">Calcular</button>
+        </form>
+    </div>
+</body>
+</html>
