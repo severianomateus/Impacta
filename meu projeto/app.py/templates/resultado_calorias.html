@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado do Gasto Calórico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Seu Gasto Diário</h1>
+
+        <div class="resultado-box">
+            <p><strong>Gasto calórico diário:</strong> {{ tdee }} kcal</p>
+            <p><strong>Para perder peso:</strong> {{ perder }} kcal</p>
+            <p><strong>Para ganhar massa:</strong> {{ ganhar }} kcal</p>
+        </div>
+
+        <a href="/">
+            <button class="btn-neon">Voltar ao início</button>
+        </a>
+    </div>
+</body>
+</html>
