@@ -9,3 +9,5 @@ Projetei uma página de cadastro que fazia algumas perguntas ao cliente e gerava
 Criei uma nova funcionalidade: Quando a pessoa clica em "enviar", ela é direcionada para uma tela de "obrigado" com um botão para gerar um treino. Ao clicar no botão, o sistema pergunta quantas vezes na semana a pessoa irá treinar, e após ela selecionar a quantidade de dias, o sistema retorna com um treino personalizado.
 
 Terceira funcionalidade: Criei uma tabela no final da tela de geração de treinos, em que mostra para a pessoa quantos dias ela vai levar para sair do sedentarismo, a partir da quantidade de dias treinados.
+
+Quarta e ultima funcionalidade: Criei uma calculadora de gasto calorico, que calcula qual o gasto calorico diario, usando o TMB (taxa metabolica basal) + a sugestao de ingestao calorica diaria para determinado objetivo (manter peso, ganhar peso ou perder peso).
